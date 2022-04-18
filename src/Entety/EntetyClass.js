@@ -4,9 +4,7 @@ import { collide } from "./Collision.js"
 
 
 export class Entety {
-    position;
-    bounding;
-    facing;
+    rendering
     speed;
     vel;
     keys;
@@ -14,9 +12,11 @@ export class Entety {
     onGround;
 
     constructor({pos, bound, speed, left}) {
-        this.position = pos;
-        this.bounding = bound;
-        this.left = left;
+        this.rendering = {
+            position: pos,
+            bounding: bound,
+            left: left
+        }
         this.speed = speed;
         this.vel = {x: 0, y: 0};
         this.jumping = false;
@@ -29,17 +29,20 @@ export class Entety {
         this.attack();
         if (this.jumping)
             this.jump();
-        // applyes a friction of .5 to the velocity.
         this.vel.x *= .5;
         this.vel.y *= .95;
-        this.position.x += this.vel.x;
-        this.position.y += this.vel.y;
+        this.rendering.position.x += this.vel.x;
+        this.rendering.position.y += this.vel.y;
     }
 
     draw() {
         c.beginPath();
         c.fillStyle = "green";
-        c.fillRect(this.position.x, this.position.y, this.bounding.width, this.bounding.height);
+        c.fillRect(this.rendering.position.x,
+            this.rendering.position.y,
+            this.rendering.bounding.width,
+            this.rendering.bounding.height
+        );
     }
 
     attack(keyDown) {
@@ -59,10 +62,10 @@ export class Entety {
     }
 
     move() {
-        if (this.keys["KeyA"] && this.velX > -this.speed.walk) {
+        if (this.keys["KeyA"] && this.vel.x > -this.speed.walk) {
             this.vel.x -= 4;
         }
-        if (this.keys["KeyD"] && this.velX < this.speed.walk) {
+        if (this.keys["KeyD"] && this.vel.x < this.speed.walk) {
             this.vel.x += 4;
         }
         if (this.keys["KeyW"] && this.onGround) {
@@ -74,10 +77,10 @@ export class Entety {
     }
 
     jump() {
-        if (this.position.y + this.bounding.height >= canvas.height + .01) {
+        if (this.rendering.position.y + this.rendering.bounding.height >= canvas.height + .01) {
             this.jumping = false;
             this.onGround = true;
-            this.position.y = canvas.height - this.bounding.height;
+            this.rendering.position.y = canvas.height - this.rendering.bounding.height;
             this.vel.y = 0;
             return;
         }
