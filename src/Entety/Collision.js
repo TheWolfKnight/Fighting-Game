@@ -23,4 +23,7 @@ function collide(attackEnt) {
     return {status: false, collision: null};
 }
 
-export { collide };
+function predictMove(ent) {
+}
+
+export { collide, predictMove };

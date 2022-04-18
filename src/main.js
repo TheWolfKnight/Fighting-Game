@@ -17,15 +17,17 @@ function setup(width, height) {
     entetys[0] = new Entety({
         pos: {x: 200, y: height-150},
         bound: {width: 50, height: 150},
-        speed: {walk: 10, jump: 10},
-        left: true
+        speed: {walk: 1, jump: 30},
+        left: true,
+        color: "blue"
     });
 
     entetys[1] = new Entety({
         pos: {x: 0, y: height-150},
         bound: {width: 50, height: 150},
-        speed: {walk: 10, jump: 10},
-        left: false
+        speed: {walk: 1, jump: 30},
+        left: false,
+        color: "green"
     });
 
     screen = new ScreenControler();
@@ -59,7 +61,6 @@ function main() {
     window.requestAnimationFrame(main);
     return;
 }
-
 
 setup(1024, 520);
 main();

@@ -1,35 +1,39 @@
 
 import { canvas, c} from "../main.js";
-import { collide } from "./Collision.js"
+import { collide, predictMove } from "./Collision.js"
 
 
 export class Entety {
-    rendering
-    speed;
+    rendering;
+    static speed;
+    combat;
     vel;
     keys;
     jumping;
     onGround;
 
-    constructor({pos, bound, speed, left}) {
+    constructor({pos, bound, combat, speed, left, color}) {
         this.rendering = {
             position: pos,
             bounding: bound,
             left: left
-        }
+        };
         this.speed = speed;
+        this.combat = combat;
         this.vel = {x: 0, y: 0};
         this.jumping = false;
         this.onGround = true;
+        // Remove this when we add sprites
+        this.color = color;
     }
 
     update(keysStates) {
-        this.keys = keysStates
+        this.keys = keysStates;
         this.move();
         this.attack();
         if (this.jumping)
             this.jump();
-        this.vel.x *= .5;
+        this.vel.x *= .90;
         this.vel.y *= .95;
         this.rendering.position.x += this.vel.x;
         this.rendering.position.y += this.vel.y;
@@ -37,7 +41,7 @@ export class Entety {
 
     draw() {
         c.beginPath();
-        c.fillStyle = "green";
+        c.fillStyle = this.color;
         c.fillRect(this.rendering.position.x,
             this.rendering.position.y,
             this.rendering.bounding.width,
@@ -52,7 +56,7 @@ export class Entety {
         const attackData = {
             pos: {},
             bounding: {}
-        }
+        };
         const collisionData = collide(this);
         if (!collisionData.status) {
             return;
@@ -61,15 +65,19 @@ export class Entety {
         return;
     }
 
+    takeDamage(amt) {
+        this.combat.health -= amt * this.combat.def;
+    }
+
     move() {
-        if (this.keys["KeyA"] && this.vel.x > -this.speed.walk) {
-            this.vel.x -= 4;
+        if (this.keys["KeyA"] && this.vel.x > -10) {
+            this.vel.x -= this.speed.walk;
         }
-        if (this.keys["KeyD"] && this.vel.x < this.speed.walk) {
-            this.vel.x += 4;
+        if (this.keys["KeyD"] && this.vel.x < 10) {
+            this.vel.x += this.speed.walk;
         }
         if (this.keys["KeyW"] && this.onGround) {
-            this.vel.y = -20;
+            this.vel.y = -this.speed.jump;
             this.jumping = true;
             this.onGround = false;
         }
@@ -77,6 +85,7 @@ export class Entety {
     }
 
     jump() {
+        const grav = 1.5;
         if (this.rendering.position.y + this.rendering.bounding.height >= canvas.height + .01) {
             this.jumping = false;
             this.onGround = true;
@@ -84,7 +93,6 @@ export class Entety {
             this.vel.y = 0;
             return;
         }
-        const grav = 1;
         this.vel.y += grav;
     }
 
