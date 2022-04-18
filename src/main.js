@@ -1,6 +1,6 @@
 
 import { Entety } from "./Entety/EntetyClass.js";
-import { ScreenControler } from "./screen/Controler.js";
+import { ScreenControler } from "./Screen/Controler.js";
 
 export const canvas = document.querySelector('canvas');
 export const c = canvas.getContext('2d');
