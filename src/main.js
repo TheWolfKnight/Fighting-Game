@@ -33,7 +33,6 @@ function setup(width, height) {
     return;
 }
 
-
 document.addEventListener("keydown", function(event) {
     keys[event.code] = true;
 });
