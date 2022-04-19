@@ -1,9 +1,10 @@
 
 import { Entety } from "./Entety/EntetyClass.js";
-import { ScreenControler } from "./Screen/Controler.js";
+import { ScreenControler } from "./Screen/Controller.js";
 
 export const canvas = document.querySelector('canvas');
 export const c = canvas.getContext('2d');
+export var  tick;
 
 export var entetys = [];
 var keys = {};
@@ -31,6 +32,7 @@ function setup(width, height) {
     });
 
     screen = new ScreenControler();
+    tick = 0;
 
     return;
 }
@@ -58,6 +60,7 @@ function main() {
 
     entetys[0].update(keys);
 
+    tick++;
     window.requestAnimationFrame(main);
     return;
 }

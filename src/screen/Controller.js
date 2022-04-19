@@ -1,15 +1,15 @@
 
 
 class ScreenState {
-    static MainMenu = 1;
-    static CharSelect = 2;
-    static GameScene = 4;
-    static Pause = 16;
-    static EndGame = 32;
+    static MainMenu = 0;
+    static CharSelect = 1;
+    static GameScene = 2;
+    static Pause = 3;
+    static EndGame = 4;
 }
 
 
-export class ScreenControler {
+export class ScreenController {
     currScreen;
 
     constructor() {
@@ -23,9 +23,9 @@ export class ScreenControler {
         }
 
         if (next)
-            this.currScreen = this.currScreen << 1;
+            this.currScreen = this.currScreen + 1;
         else
-            this.currScreen = this.currScreen >> 1;
+            this.currScreen = this.currScreen - 1;
         return;
     }
 
