@@ -17,7 +17,6 @@ function collide(attackEnt, ignore=null) {
         var distY = Math.abs((attackEnt.rendering.position.y + AttackHalfHeight) - (ent.rendering.position.y + EntHalfHeight));
 
         if (distX <= AttackHalfWidth + EntHalfWidth && distY <= AttackHalfHeight + EntHalfHeight) {
-            console.log("collided")
             return {status: true, collision: ent};
         }
     }
@@ -39,22 +38,29 @@ function validMove(entety) {
         },
     }
 
-    const EndOfSpriteHeight = projection.rendering.position.y + projection.rendering.bounding.height;
     const EndOfSpriteWidth = projection.rendering.position.x + projection.rendering.bounding.width;
+    const EndOfSpriteHeight = projection.rendering.position.y + projection.rendering.bounding.height;
 
     var r = {
-        x: true,
+        x: [true, 0],
         y: true,
         ground: false
     };
 
-    if (EndOfSpriteWidth > canvas.width || projection.rendering.position.x < 0) {
-            r.x = false;
+    if (EndOfSpriteWidth > canvas.width) {
+        r.x[0] = false;
+        r.x[1] = canvas.width - entety.rendering.bounding.width;
+    } else if (projection.rendering.position.x < 0) {
+        r.x[0] = false;
     }
 
-    if (EndOfSpriteHeight > canvas.height || projection.rendering.position.y < 0) {
+    if (EndOfSpriteHeight > canvas.height) {
         r.y = false;
         r.ground = true;
+    }
+
+    const collisionData = collide(projection, entety);
+    if (collisionData.status) {
     }
 
     return r;

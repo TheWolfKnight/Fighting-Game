@@ -37,17 +37,23 @@ export class PlayerClass extends Entety {
             this.jump(validation.ground);
         }
 
-        if (validation.x) {
+        if (validation.x[0]) {
             this.rendering.position.x += this.vel.x;
+        } else {
+            this.rendering.position.x = validation.x[1];
+            this.vel.x = 0;
         }
+
         if (validation.y) {
             this.rendering.position.y += this.vel.y;
         }
     }
 
     attack(keyDown) {
-        // light code: Comma
-        // heavy keyCode: Periot
+
+        if (keyDown === "Comma") {
+        } else if (keyDown === "Period") {
+        }
 
         const attackData = {
             rendering: {
