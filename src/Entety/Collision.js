@@ -3,7 +3,7 @@ import { entetys } from "../main.js";
 
 function collide(attackEnt) {
     for (let ent of entetys) {
-        if (ent === attackEnt) {
+        if (ent === attackEnt || ent.type in [ "attack", "check" ]) {
             continue;
         }
 
@@ -23,7 +23,8 @@ function collide(attackEnt) {
     return {status: false, collision: null};
 }
 
-function predictMove(ent) {
+function validMove(entety) {
+    return true;
 }
 
-export { collide, predictMove };
+export { collide, validMove };

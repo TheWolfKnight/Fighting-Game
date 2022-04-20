@@ -1,6 +1,6 @@
 
 import { canvas, c} from "../main.js";
-import { collide, predictMove } from "./Collision.js"
+import { collide, validMove } from "./Collision.js"
 
 
 export class Entety {
@@ -11,8 +11,9 @@ export class Entety {
     keys;
     jumping;
     onGround;
+    type;
 
-    constructor({pos, bound, combat, speed, left, color}) {
+    constructor({pos, bound, combat, speed, left, color, type=null}) {
         this.rendering = {
             position: pos,
             bounding: bound,
@@ -23,11 +24,12 @@ export class Entety {
         this.vel = {x: 0, y: 0};
         this.jumping = false;
         this.onGround = true;
+        this.type = type;
         // Remove this when we add sprites
         this.color = color;
     }
 
-    update(keysStates) {
+    update(keysStates, tickState) {
         this.keys = keysStates;
         this.move();
         this.attack();

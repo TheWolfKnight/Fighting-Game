@@ -58,7 +58,7 @@ function main() {
         ent.draw();
     }
 
-    entetys[0].update(keys);
+    entetys[0].update(keys, tick);
 
     tick++;
     window.requestAnimationFrame(main);
