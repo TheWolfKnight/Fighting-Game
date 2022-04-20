@@ -43,7 +43,7 @@ document.addEventListener("keydown", function(event) {
 
 document.addEventListener("keyup", function(event) {
     keys[event.code] = false;
-})
+});
 
 
 function main() {
