@@ -1,6 +1,6 @@
 
-import { Entety } from "./Entety/EntetyClass.js";
-import { ScreenController } from "./Screen/Controller.js";
+import { PlayerClass } from "./Player/Player.js";
+import { ScreenController } from "./Screen/ScreenController.js";
 
 export const canvas = document.querySelector('canvas');
 export const c = canvas.getContext('2d');
@@ -15,7 +15,7 @@ function setup(width, height) {
     canvas.width = width;
     canvas.height = height;
 
-    entetys[0] = new Entety({
+    entetys[0] = new PlayerClass({
         pos: {x: 200, y: height-150},
         bound: {width: 50, height: 150},
         speed: {walk: 1, jump: 30},
@@ -23,7 +23,7 @@ function setup(width, height) {
         color: "blue"
     });
 
-    entetys[1] = new Entety({
+    entetys[1] = new PlayerClass({
         pos: {x: 0, y: height-150},
         bound: {width: 50, height: 150},
         speed: {walk: 1, jump: 30},
@@ -52,7 +52,7 @@ function main() {
     c.fillRect(0, 0, canvas.width, canvas.height);
 
     c.fillStyle = "white";
-    c.fillRect(0,0,20,20);
+    c.fillRect(0,0,5,5);
 
     for (let ent of entetys) {
         ent.draw();

@@ -1,9 +1,9 @@
 
-import { entetys } from "../main.js";
+import { canvas, entetys } from "../main.js";
 
-function collide(attackEnt) {
+function collide(attackEnt, ignore=null) {
     for (let ent of entetys) {
-        if (ent === attackEnt || ent.type in [ "attack", "check" ]) {
+        if (ent === ignore) {
             continue;
         }
 
@@ -17,6 +17,7 @@ function collide(attackEnt) {
         var distY = Math.abs((attackEnt.rendering.position.y + AttackHalfHeight) - (ent.rendering.position.y + EntHalfHeight));
 
         if (distX <= AttackHalfWidth + EntHalfWidth && distY <= AttackHalfHeight + EntHalfHeight) {
+            console.log("collided")
             return {status: true, collision: ent};
         }
     }
@@ -24,7 +25,39 @@ function collide(attackEnt) {
 }
 
 function validMove(entety) {
-    return true;
+
+    const projection = {
+        rendering: {
+            position: {
+                x: entety.rendering.position.x + entety.vel.x,
+                y: entety.rendering.position.y + entety.vel.y
+            },
+            bounding: {
+                width: entety.rendering.bounding.width,
+                height: entety.rendering.bounding.height
+            }
+        },
+    }
+
+    const EndOfSpriteHeight = projection.rendering.position.y + projection.rendering.bounding.height;
+    const EndOfSpriteWidth = projection.rendering.position.x + projection.rendering.bounding.width;
+
+    var r = {
+        x: true,
+        y: true,
+        ground: false
+    };
+
+    if (EndOfSpriteWidth > canvas.width || projection.rendering.position.x < 0) {
+            r.x = false;
+    }
+
+    if (EndOfSpriteHeight > canvas.height || projection.rendering.position.y < 0) {
+        r.y = false;
+        r.ground = true;
+    }
+
+    return r;
 }
 
 export { collide, validMove };

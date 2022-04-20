@@ -1,17 +1,17 @@
 
 
 class MenuRendere {
-	menuInfo;
+    menuInfo;
 
-	constructor(menuInfo) {
-		this.menuInfo = menuInfo;
-	}
+    constructor(menuInfo) {
+        this.menuInfo = menuInfo;
+    }
 
-	show() {
-	}
+    show() {
+    }
 
-	clear() {
-	}
+    clear() {
+    }
 }
 
 

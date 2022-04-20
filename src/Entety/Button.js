@@ -3,7 +3,8 @@
 import { Entety } from "./EntetyClass.js";
 
 
-export ButtonEntety {
-	constructor() {
-	}
+export class Button extends Entety {
+    constructor({pos, bound}) {
+        super({pos, bound});
+    }
 }
