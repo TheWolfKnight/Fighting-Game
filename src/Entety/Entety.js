@@ -6,7 +6,7 @@ export class Entety {
     rendering;
     animation;
 
-    constructor({pos, bound, anim}) {
+    constructor(pos, bound, anim) {
         this.rendering = {
             position: pos,
             bounding: bound
@@ -16,7 +16,7 @@ export class Entety {
 
     draw() {
         c.beginPath();
-        c.fillStyle = this.color;
+        c.fillStyle = this.animation;
         c.fillRect(this.rendering.position.x,
             this.rendering.position.y,
             this.rendering.bounding.width,

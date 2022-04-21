@@ -1,7 +1,7 @@
 
 import { canvas, entetys } from "../main.js";
 
-function collide(attackEnt, ignore=null) {
+function attackCollision(attackEnt, ignore) {
     for (let ent of entetys) {
         if (ent === ignore) {
             continue;
@@ -59,11 +59,11 @@ function validMove(entety) {
         r.ground = true;
     }
 
-    const collisionData = collide(projection, entety);
-    if (collisionData.status) {
+    const collisionData = movementCollision(projection, entety);
+    if (collisionData.x || collisionData.y) {
     }
 
     return r;
 }
 
-export { collide, validMove };
+export { attackCollision, validMove };

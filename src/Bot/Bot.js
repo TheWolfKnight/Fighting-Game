@@ -1,4 +1,4 @@
-import { Entety } from "../Entety/Entety";
+import { Entety } from "../Entety/Entety.js";
 
 
 export class BotDifficults {
@@ -11,6 +11,29 @@ export class BotDifficults {
 
 
 export class Bot extends Entety {
-    constructor() {
+    diffeculty;
+
+    constructor({dif, pos, bound, anim, left}) {
+        super(pos, bound, anim);
+        this.diffeculty = dif;
     }
+
+    update() {
+        switch (this.diffeculty) {
+            case BotDifficults.Dummy:
+                break;
+            case BotDifficults.Easy:
+                // TODO: yes
+                break;
+            case BotDifficults.Medium:
+                // TODO: yes
+                break;
+            case BotDifficults.Hard:
+                // TODO: yes
+                break;
+            default:
+                throw Error;
+        }
+    }
+
 }

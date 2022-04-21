@@ -1,6 +1,6 @@
 
 import { canvas, c} from "../main.js";
-import { collide, validMove } from "../Entety/Collision.js"
+import { attackCollision, validMove } from "../Entety/Collision.js"
 import { Entety } from "../Entety/Entety.js";
 
 
@@ -12,14 +12,12 @@ export class PlayerClass extends Entety {
     jumping;
     onGround;
 
-    constructor({pos, bound, combat, speed, color}) {
-        super({pos, bound});
+    constructor({pos, bound, combat, speed, anim}) {
+        super(pos, bound, anim);
         this.speed = speed;
         this.combat = combat;
         this.vel = {x: 0, y: 0};
         this.jumping = false;
-        // Remove this when we add sprites
-        this.color = color;
     }
 
     update(keysStates, tickState) {
@@ -61,7 +59,7 @@ export class PlayerClass extends Entety {
                 bounding: {width: 0, height: 0}
             }
         };
-        const collisionData = collide(attackData, this);
+        const collisionData = attackCollision(attackData, this);
         if (!collisionData.status) {
             return;
         }

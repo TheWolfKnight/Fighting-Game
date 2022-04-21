@@ -1,6 +1,7 @@
 
 import { PlayerClass } from "./Player/Player.js";
 import { ScreenController } from "./Screen/ScreenController.js";
+import { Bot, BotDifficults } from "./Bot/Bot.js";
 
 export const canvas = document.querySelector('canvas');
 export const c = canvas.getContext('2d');
@@ -20,15 +21,14 @@ function setup(width, height) {
         bound: {width: 50, height: 150},
         speed: {walk: 1, jump: 30},
         left: true,
-        color: "blue"
+        anim: "blue"
     });
 
-    entetys[1] = new PlayerClass({
-        pos: {x: 0, y: height-150},
+    entetys[1] = new Bot({
+        dif: BotDifficults.Dummy,
+        pos: {x: width-250, y: height-150},
         bound: {width: 50, height: 150},
-        speed: {walk: 1, jump: 30},
-        left: false,
-        color: "green"
+        anim: "green"
     });
 
     screen = new ScreenController();
@@ -55,10 +55,10 @@ function main() {
     c.fillRect(0,0,5,5);
 
     for (let ent of entetys) {
+        ent.update(keys, tick);
         ent.draw();
     }
 
-    entetys[0].update(keys, tick);
 
     tick++;
     window.requestAnimationFrame(main);
