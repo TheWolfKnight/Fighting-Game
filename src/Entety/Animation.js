@@ -20,15 +20,30 @@ class AnimationRendere {
 
     constructor(charInfo) {
         this.state = CharactorState.Idle;
-        this.charInfo = charInfo
+        this.charInfo = charInfo;
+    }
+
+    update(tick) {
     }
 
     render() {
     }
 
-    nextFrame() {
-    }
-
-    getFramePath() {
+    setAnimationState(action) {
+        switch (action) {
+            case "attL":
+                break;
+            case "attH":
+                break;
+            case "idle":
+                break;
+            case "walk":
+                break;
+            case "jmp":
+                break;
+            default:
+                throw Error;
+        }
+        return;
     }
 }

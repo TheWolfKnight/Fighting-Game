@@ -10,6 +10,7 @@ export class PlayerClass extends Entety {
     vel;
     keys;
     jumping;
+    delay;
     onGround;
 
     constructor({pos, bound, combat, speed, anim}) {
@@ -18,9 +19,19 @@ export class PlayerClass extends Entety {
         this.combat = combat;
         this.vel = {x: 0, y: 0};
         this.jumping = false;
+        this.delay = {active: false, tickStart: 0, amtTicks: 0};
     }
 
-    update(keysStates, tickState) {
+    update(keysStates, ticks) {
+        this.animation.update(ticks);
+        if (this.delay.active) {
+            var dif = ticks - this.delay.tickStart;
+            if (dif >= amtTicks) {
+                this.delay.active = false;
+            } else {
+                return;
+            }
+        }
         validMove(this);
         this.keys = keysStates;
         this.move();
@@ -49,16 +60,18 @@ export class PlayerClass extends Entety {
 
     attack(keyDown) {
 
+        var attackData = {};
+
         if (keyDown === "Comma") {
+            attackData = {
+                position: {x: 0, y: 0},
+                bounding: {widht: 1, height: 1},
+                amtTicks: 100
+            };
         } else if (keyDown === "Period") {
+            console.log("heavy attack");
         }
 
-        const attackData = {
-            rendering: {
-                position: {x: 0, y: 0},
-                bounding: {width: 0, height: 0}
-            }
-        };
         const collisionData = attackCollision(attackData, this);
         if (!collisionData.status) {
             return;
