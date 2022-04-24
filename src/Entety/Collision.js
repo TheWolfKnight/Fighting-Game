@@ -13,14 +13,22 @@ function attackCollision(attackEnt, ignore) {
         const EntHalfWidth = ent.rendering.bounding.width/2;
         const EntHalfHeight = ent.rendering.bounding.height/2;
 
-        var distX = Math.abs((attackEnt.rendering.position.x + AttackHalfWidth) - (ent.rendering.position.x + EntHalfWidth));
-        var distY = Math.abs((attackEnt.rendering.position.y + AttackHalfHeight) - (ent.rendering.position.y + EntHalfHeight));
+        const distX = (attackEnt.rendering.position.x + AttackHalfWidth) - (ent.rendering.position.x + EntHalfWidth);
+        const distY = (attackEnt.rendering.position.y + AttackHalfHeight) - (ent.rendering.position.y + EntHalfHeight);
 
-        if (distX <= AttackHalfWidth + EntHalfWidth && distY <= AttackHalfHeight + EntHalfHeight) {
-            return {status: true, collision: ent};
+        const CollisionDistX = AttackHalfWidth + EntHalfWidth;
+        const CollisionDistY = AttackHalfHeight + EntHalfHeight;
+
+        if (Math.abs(distX) <= CollisionDistX && Math.abs(distY) <= CollisionDistY) {
+            return {status: true, collision: ent,
+                    dists: {x: distX, y: distY}, hitbox: {x: CollisionDistX, y: CollisionDistY}};
         }
     }
     return {status: false, collision: null};
+}
+
+function movementCollision(tar, ign) {
+    return false;
 }
 
 function validMove(entety) {
@@ -43,7 +51,7 @@ function validMove(entety) {
 
     var r = {
         x: [true, 0],
-        y: true,
+        y: [true, 0],
         ground: false
     };
 
@@ -59,8 +67,12 @@ function validMove(entety) {
         r.ground = true;
     }
 
-    const collisionData = movementCollision(projection, entety);
+    const collisionData = attackCollision(projection, entety);
     if (collisionData.x || collisionData.y) {
+        if (Math.abs(collisionData.dists.x) <= collisionData.hitbox.x) {
+        }
+        if (Math.abs(collisionData.dists.y) <= collisionData.hitbox.y) {
+        }
     }
 
     return r;

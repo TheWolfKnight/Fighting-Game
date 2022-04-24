@@ -13,8 +13,8 @@ export class BotDifficults {
 export class Bot extends Entety {
     diffeculty;
 
-    constructor({dif, pos, bound, anim, left}) {
-        super(pos, bound, anim);
+    constructor({dif, pos, bound, left, anim}) {
+        super(pos, bound, left, anim);
         this.diffeculty = dif;
     }
 

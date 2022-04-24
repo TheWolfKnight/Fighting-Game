@@ -13,8 +13,8 @@ export class PlayerClass extends Entety {
     delay;
     onGround;
 
-    constructor({pos, bound, combat, speed, anim}) {
-        super(pos, bound, anim);
+    constructor({pos, bound, left, combat, speed, anim}) {
+        super(pos, bound, left, anim);
         this.speed = speed;
         this.combat = combat;
         this.vel = {x: 0, y: 0};
@@ -35,7 +35,9 @@ export class PlayerClass extends Entety {
         validMove(this);
         this.keys = keysStates;
         this.move();
-        this.attack();
+
+        if (keysStates["Comma"] || keysStates["Period"])
+            this.attack();
 
         this.vel.x *= .90;
         this.vel.y *= .95;
@@ -55,28 +57,37 @@ export class PlayerClass extends Entety {
 
         if (validation.y) {
             this.rendering.position.y += this.vel.y;
+        } else {
+            this.rendering.position.y = validation.y[1];
+            this.vel.y = 0;
         }
     }
 
-    attack(keyDown) {
+    attack() {
 
         var attackData = {};
 
-        if (keyDown === "Comma") {
-            attackData = {
-                position: {x: 0, y: 0},
-                bounding: {widht: 1, height: 1},
+        if (this.keys["Comma"]) {
+            attackData = {rendering: {
+                    position: {x: 0, y: 0},
+                    bounding: {widht: 1, height: 1}
+                },
                 amtTicks: 100
             };
-        } else if (keyDown === "Period") {
-            console.log("heavy attack");
+        } else if (this.keys["Period"]) {
+            attackData = {rendering: {
+                    position: {x: 0, y: 0},
+                    bounding: {widht: 1, height: 1}
+                },
+                amtTicks: 100
+            };
         }
 
         const collisionData = attackCollision(attackData, this);
         if (!collisionData.status) {
             return;
         }
-
+        console.log("hit");
         return;
     }
 

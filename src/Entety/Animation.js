@@ -1,6 +1,4 @@
 
-import { tick } from "../main.js";
-
 
 class CharactorState {
     Idle = 0;
@@ -14,7 +12,7 @@ class CharactorState {
 }
 
 
-class AnimationRendere {
+export class AnimationRendere {
     state;
     charInfo;
 
@@ -27,6 +25,7 @@ class AnimationRendere {
     }
 
     render() {
+        return this.charInfo;
     }
 
     setAnimationState(action) {
