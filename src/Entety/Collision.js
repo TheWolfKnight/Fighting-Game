@@ -63,18 +63,22 @@ function validMove(entety) {
     }
 
     if (EndOfSpriteHeight > canvas.height) {
-        r.y = false;
+        r.y[0] = false;
         r.ground = true;
     }
 
     const collisionData = attackCollision(projection, entety);
+    // console.table(collisionData);
     if (collisionData.x || collisionData.y) {
         if (Math.abs(collisionData.dists.x) <= collisionData.hitbox.x) {
+            console.log("hit x");
+            r.y[0] = false;
+            r.y[1] = entety.rendering.position.y;
         }
         if (Math.abs(collisionData.dists.y) <= collisionData.hitbox.y) {
+            console.log("hit y");
         }
     }
-
     return r;
 }
 

@@ -26,7 +26,7 @@ function setup(width, height) {
 
     entetys[1] = new Bot({
         dif: BotDifficults.Dummy,
-        pos: {x: width-250, y: height-150},
+        pos: {x: 200, y: height-150},
         bound: {width: 50, height: 150},
         left: false,
         anim: "green"
