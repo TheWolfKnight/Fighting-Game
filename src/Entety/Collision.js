@@ -2,6 +2,7 @@
 import { canvas, entetys } from "../main.js";
 
 function attackCollision(attackEnt, ignore) {
+    var x = false, y = false, ente = null;
     for (let ent of entetys) {
         if (ent === ignore) {
             continue;
@@ -19,17 +20,13 @@ function attackCollision(attackEnt, ignore) {
         const CollisionDistX = AttackHalfWidth + EntHalfWidth;
         const CollisionDistY = AttackHalfHeight + EntHalfHeight;
 
-        if (Math.abs(distX) <= CollisionDistX && Math.abs(distY) <= CollisionDistY) {
-            return {status: true, collision: ent,
-                    dists: {x: distX, y: distY}, hitbox: {x: CollisionDistX, y: CollisionDistY}};
-        }
+        if (Math.abs(distX) <= CollisionDistX) { x = true; }
+        if (Math.abs(distY) <= CollisionDistY) { y = true; }
+        if (x && y) { ente = ent; }
     }
-    return {status: false, collision: null};
+    return { status: x && y, collision: ente, collids: {x: x, y: y} };
 }
 
-function movementCollision(tar, ign) {
-    return false;
-}
 
 function validMove(entety) {
 
@@ -68,17 +65,10 @@ function validMove(entety) {
     }
 
     const collisionData = attackCollision(projection, entety);
-    // console.table(collisionData);
-    if (collisionData.x || collisionData.y) {
-        if (Math.abs(collisionData.dists.x) <= collisionData.hitbox.x) {
-            console.log("hit x");
-            r.y[0] = false;
-            r.y[1] = entety.rendering.position.y;
-        }
-        if (Math.abs(collisionData.dists.y) <= collisionData.hitbox.y) {
-            console.log("hit y");
-        }
+    if (collisionData.collids.x) {
+
     }
+
     return r;
 }
 

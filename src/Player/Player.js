@@ -72,14 +72,16 @@ export class PlayerClass extends Entety {
                     position: {x: 0, y: 0},
                     bounding: {widht: 1, height: 1}
                 },
-                amtTicks: 100
+                amtTicks: 100,
+                dmg: 1
             };
         } else if (this.keys["Period"]) {
             attackData = {rendering: {
                     position: {x: 0, y: 0},
                     bounding: {widht: 1, height: 1}
                 },
-                amtTicks: 100
+                amtTicks: 100,
+                dmg: 5
             };
         }
 
@@ -87,7 +89,7 @@ export class PlayerClass extends Entety {
         if (!collisionData.status) {
             return;
         }
-        console.log("hit");
+        ente.takeDamage(attackData.dmg);
         return;
     }
 
