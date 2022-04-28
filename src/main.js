@@ -17,16 +17,16 @@ function setup(width, height) {
     canvas.height = height;
 
     entetys[0] = new PlayerClass({
-        pos: {x: 200, y: height-150},
+        pos: {x: 1000, y: height-150},
         bound: {width: 50, height: 150},
-        speed: {walk: 1, jump: 30},
+        speed: {walk: 1, jump: 50},
         left: true,
         anim: "blue"
     });
 
     entetys[1] = new Bot({
         dif: BotDifficults.Dummy,
-        pos: {x: 200, y: height-150},
+        pos: {x: width-500, y: height-150},
         bound: {width: 50, height: 150},
         left: false,
         anim: "green"

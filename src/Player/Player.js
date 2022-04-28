@@ -32,7 +32,7 @@ export class PlayerClass extends Entety {
                 return;
             }
         }
-        validMove(this);
+
         this.keys = keysStates;
         this.move();
 
@@ -51,14 +51,14 @@ export class PlayerClass extends Entety {
         if (validation.x[0]) {
             this.rendering.position.x += this.vel.x;
         } else {
-            this.rendering.position.x = validation.x[1];
+            this.rendering.position.x += validation.x[1];
             this.vel.x = 0;
         }
 
         if (validation.y) {
             this.rendering.position.y += this.vel.y;
         } else {
-            this.rendering.position.y = validation.y[1];
+            this.rendering.position.y += validation.y[1];
             this.vel.y = 0;
         }
     }

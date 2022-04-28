@@ -2,7 +2,7 @@
 import { canvas, entetys } from "../main.js";
 
 function attackCollision(attackEnt, ignore) {
-    var x = false, y = false, ente = null;
+    var status = false, ente = null;
     for (let ent of entetys) {
         if (ent === ignore) {
             continue;
@@ -20,11 +20,33 @@ function attackCollision(attackEnt, ignore) {
         const CollisionDistX = AttackHalfWidth + EntHalfWidth;
         const CollisionDistY = AttackHalfHeight + EntHalfHeight;
 
-        if (Math.abs(distX) <= CollisionDistX) { x = true; }
-        if (Math.abs(distY) <= CollisionDistY) { y = true; }
-        if (x && y) { ente = ent; }
+        if (Math.abs(distX) <= CollisionDistX && Math.abs(distY) <= CollisionDistY) { status = true; ente = ent; }
     }
-    return { status: x && y, collision: ente, collids: {x: x, y: y} };
+    return { status: status, collision: ente,};
+}
+
+
+function movementCollision(entety, ign) {
+    for (let ent of entetys) {
+        if (ent === ign) {
+            continue;
+        }
+
+        const EntetyHalfWidth = entety.rendering.bounding.width/2;
+        const EntetyHalfHight = entety.rendering.bounding.height/2;
+
+        const EntHalfWidth = ent.rendering.bounding.width/2;
+        const EntHalfHeight = ent.rendering.bounding.width/2;
+
+        if (entety.rendering.position.y < ent.rendering.position.y + entety.rendering.bounding.height) {
+            const distX = (entety.rendering.position.x + EntetyHalfWidth) - (ent.rendering.position.x + EntHalfWidth);
+            if (Math.abs(distX) <= EntetyHalfWidth + EntHalfWidth) {
+                return { status: true, collidsX: true, correction: distX - Math.sign(distX)*(EntetyHalfWidth + EntHalfWidth ) - ign.vel.x * 1.1 };
+            }
+        }
+
+    }
+    return { status: false };
 }
 
 
@@ -54,9 +76,10 @@ function validMove(entety) {
 
     if (EndOfSpriteWidth > canvas.width) {
         r.x[0] = false;
-        r.x[1] = canvas.width - entety.rendering.bounding.width;
+        r.x[1] = -(projection.rendering.position.x + entety.rendering.bounding.width) + canvas.width;
     } else if (projection.rendering.position.x < 0) {
         r.x[0] = false;
+        r.x[1] = -(projection.rendering.position.x);
     }
 
     if (EndOfSpriteHeight > canvas.height) {
@@ -64,9 +87,12 @@ function validMove(entety) {
         r.ground = true;
     }
 
-    const collisionData = attackCollision(projection, entety);
-    if (collisionData.collids.x) {
-
+    const collisionData = movementCollision(projection, entety);
+    if (collisionData.status) {
+        if (collisionData.collidsX) {
+            r.x[0] = false;
+            r.x[1] = collisionData.correction;
+        }
     }
 
     return r;
