@@ -19,7 +19,7 @@ function setup(width, height) {
     entetys[0] = new PlayerClass({
         pos: {x: 1000, y: height-150},
         bound: {width: 50, height: 150},
-        speed: {walk: 1, jump: 50},
+        speed: {walk: 1, jump: 30},
         left: true,
         anim: "blue"
     });

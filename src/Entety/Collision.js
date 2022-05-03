@@ -38,7 +38,7 @@ function movementCollision(entety, ign) {
         const EntHalfWidth = ent.rendering.bounding.width/2;
         const EntHalfHeight = ent.rendering.bounding.width/2;
 
-        if (entety.rendering.position.y < ent.rendering.position.y + entety.rendering.bounding.height) {
+        if (entety.rendering.position.y > ent.rendering.position.y - EntetyHalfHight) {
             const distX = (entety.rendering.position.x + EntetyHalfWidth) - (ent.rendering.position.x + EntHalfWidth);
             if (Math.abs(distX) <= EntetyHalfWidth + EntHalfWidth) {
                 return { status: true, collidsX: true, correction: distX - Math.sign(distX)*(EntetyHalfWidth + EntHalfWidth ) - ign.vel.x * 1.1 };
